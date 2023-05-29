@@ -1,0 +1,6 @@
+*.json
+
+__pycache__/
+/images/
+/.vscode/
+/env/
