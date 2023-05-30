@@ -1,6 +1,5 @@
 import discord
 import time
-import random
 
 from APIs.CinemaMaldaAPI_v1_0.CinemaMaldaAPI import CinemaMaldaAPI
 
@@ -73,25 +72,6 @@ async def cinemamalda_info_no_images(ctx, dates:bool, movie_limit:int=3):
     for embed in embeds:
         time.sleep(0.3)
         await ctx.channel.send(embed=embed)
-
-# async def unknown_command(ctx):
-#     """
-#     COMPLETE
-#     """
-#     responses = [
-#         '¿Qué? xd',
-#         '¿Sabes escribir?',
-#         '¿Sí o qué?',
-#         '...',
-#         'Casiii crack',
-#         'Sisi lo que tú digas',
-#         'Lo que tengo que aguantar...',
-#         'Bro mira el mensaje antes de enviarlo',
-#         'Ajá',
-#         'Totalmente',
-#         'Alt + F4 por favor :)'
-#     ]
-#     await ctx.send(random.choice(responses))
 
 async def help_command(ctx):
     embed = discord.Embed(title="!miau malda info")
