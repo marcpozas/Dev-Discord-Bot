@@ -3,10 +3,11 @@ from discord.ext import commands
 import os
 import re
 
-from Commands.CinemaMaldaCommand import cinemamalda_info_with_images, cinemamalda_info_no_images, unknown_command, help_command
+from Commands.CinemaMaldaCommand import cinemamalda_info_with_images, cinemamalda_info_no_images, help_command
 from Commands.InstagramCommand import stalk_instagram_profile, instagram_help_command
-from Commands.NotifyCommand import notify_something
+from Commands.NotifyCommand import notify_help_command, notify_something
 from Commands.catCommand import generate_cat
+from Commands.GeneralCommands import GeneralCommands
 
 from Utils import Utils
 from CustomHelpCommand import CustomHelpCommand
@@ -55,7 +56,7 @@ async def malda(ctx, argument=None, *args):
     elif argument == 'help':
         await help_command(ctx=ctx)
     else:
-        await unknown_command(ctx=ctx)
+        await GeneralCommands.unknown_command(ctx=ctx, response_type='default')
 
 @MIAU_BOT.command(name='stalk', description='Stalkeando por Instagram.')
 async def stalk(ctx, username=None, max_posts=3):
@@ -70,8 +71,14 @@ async def cat(ctx, *args):
 
 @MIAU_BOT.command(name='notify', description='El usuario envía una propuesta o bug.')
 async def notify(ctx, *args):
-    message = ' '.join(args) if args else ''
-    await notify_something(ctx=ctx, message=message)
+    message = ' '.join(args) if args else None
+
+    if message == None:
+        await GeneralCommands.unknown_command(ctx=ctx, response_type='default')
+    elif message == 'help':
+        await notify_help_command(ctx=ctx)
+    else:
+        await notify_something(ctx=ctx, message=message)
 
 # Events
 @MIAU_BOT.event
