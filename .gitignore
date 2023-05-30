@@ -1,4 +1,5 @@
 *.json
+user_suggestions.txt
 
 __pycache__/
 /images/

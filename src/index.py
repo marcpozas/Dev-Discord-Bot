@@ -5,6 +5,7 @@ import re
 
 from Commands.CinemaMaldaCommand import cinemamalda_info_with_images, cinemamalda_info_no_images, unknown_command, help_command
 from Commands.InstagramCommand import stalk_instagram_profile, instagram_help_command
+from Commands.NotifyCommand import notify_something
 from Commands.catCommand import generate_cat
 
 from Utils import Utils
@@ -66,6 +67,11 @@ async def stalk(ctx, username=None, max_posts=3):
 @MIAU_BOT.command(name='cat', description='Retorna una foto o gif de gato.')
 async def cat(ctx, *args):
     await generate_cat(ctx=ctx, args=args)
+
+@MIAU_BOT.command(name='notify', description='El usuario envía una propuesta o bug.')
+async def notify(ctx, *args):
+    message = ' '.join(args) if args else ''
+    await notify_something(ctx=ctx, message=message)
 
 # Events
 @MIAU_BOT.event

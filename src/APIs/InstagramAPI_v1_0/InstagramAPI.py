@@ -25,11 +25,14 @@ class InstagramAPI:
 
         url = f"https://www.instagram.com/{username}/?__a=1&__d=dis"
         print(url)
-        cookie = self.get_cookie(file=f"{script_folder}\\COOKIE.json")
+        try:
+            cookie = self.get_cookie(file=f"{script_folder}\\COOKIE.json")
+        except:
+            cookie = None
         json = self.get_json(url=url, cookie=cookie)
         self.profile_data = self.get_json_data(json=json)
     
-    def send_request(self, url:str, cookie:dict, useCookie:bool=False):
+    def send_request(self, url:str, cookie:dict, useCookie:bool=True):
         """
         Send a GET request to the specified URL and return the response.
 
@@ -44,6 +47,7 @@ class InstagramAPI:
             Response: The response object.
         """
         cookies = cookie if useCookie else None
+        print(cookies)
         
         response = requests.get(url=url, cookies=cookies)
         response.raise_for_status()  # Raise an exception if the request was unsuccessful
