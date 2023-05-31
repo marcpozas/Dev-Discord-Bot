@@ -2,13 +2,23 @@ import random
 
 class GeneralCommands:
     """
-    COMPLETE
+    A class that contains general commands for handling unknown commands with different response types.
     """
 
     @staticmethod
     async def unknown_command(ctx, response_type):
         """
-        COMPLETE
+        Handle unknown commands based on the response type.
+
+        Parameters:
+            ctx (Context): The context object representing the command invocation.
+            response_type (str): The type of response to handle.
+
+        Returns:
+            None
+
+        Raises:
+            None
         """
         if response_type == 'rude':
             await GeneralCommands.rude_response(ctx=ctx)
@@ -20,7 +30,16 @@ class GeneralCommands:
     @staticmethod
     async def rude_response(ctx):
         """
-        COMPLETE
+        Send a random rude response message.
+
+        Parameters:
+            ctx (Context): The context object representing the command invocation.
+
+        Returns:
+            None
+
+        Raises:
+            None
         """
         responses = [
             '¿Qué? xd',
@@ -40,7 +59,16 @@ class GeneralCommands:
     @staticmethod
     async def default_response(ctx):
         """
-        COMPLETE
+        Send a default response message.
+
+        Parameters:
+            ctx (Context): The context object representing the command invocation.
+
+        Returns:
+            None
+
+        Raises:
+            None
         """
         responses = [
             'Comando incorrecto miau.'
