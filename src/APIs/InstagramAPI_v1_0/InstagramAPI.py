@@ -4,7 +4,30 @@ import json
 
 class InstagramAPI:
     """
+    InstagramAPI
+    ~~~
+
     API class for getting user Profile data from Instagram.
+
+    ### Args:
+    username (str): The username of the Instagram profile.
+
+    ### Attributes:
+    profile_data (dict): The information of the Instagram User.
+
+    ### Methods:
+    - `__init__(self, username: str) -> None`: Initialize the InstagramAPI object.
+    - `get_profile_data(self) -> dict`: Retrieve the profile data for the specified Instagram user.
+    - `send_request(self, url: str, cookie: dict, useCookie: bool = True)`: Send a GET request to the specified URL and return the response.
+    - `get_json(self, url: str, cookie: dict = None)`: Send an HTTP GET request to the specified URL and return the response JSON.
+    - `extract_profile_data(self, json: dict)`: Extract relevant information from a JSON object and return a dictionary containing the profile information.
+    - `get_cookie(self, file: str)`: Reads a JSON file and returns its contents as a Python dictionary.
+
+    ### Usage Example:
+    ```python
+    api = InstagramAPI("username")
+    profile_data = api.profile_data
+    ```
     """
     def __init__(self, username:str) -> None:
         """
@@ -19,18 +42,38 @@ class InstagramAPI:
         Attributes:
             profile_data (dict): The information of the Instagram User.
         """
+        self.username = username
+        self.profile_data = self.get_profile_data()
+    
+    def get_profile_data(self) -> dict:
+        """
+        Retrieve the profile data for the specified Instagram user.
+
+        Returns:
+            dict: A dictionary containing the profile information.
+
+        Raises:
+            FileNotFoundError: If the COOKIE.json file is not found.
+            InvalidJSONException: If the response cannot be parsed as JSON.
+            KeyError: If any key is missing or inaccessible in the JSON object.
+            requests.exceptions.HTTPError: If the HTTP request returns an error status code.
+        """
         # We get the current script folder name
         script_path = os.path.abspath(__file__)
         script_folder = os.path.dirname(script_path)
 
-        url = f"https://www.instagram.com/{username}/?__a=1&__d=dis"
+        url = f"https://www.instagram.com/{self.username}/?__a=1&__d=dis"
         print(url)
         try:
             cookie = self.get_cookie(file=f"{script_folder}\\COOKIE.json")
         except:
             cookie = None
-        json = self.get_json(url=url, cookie=cookie)
-        self.profile_data = self.get_json_data(json=json)
+        response_json = self.get_json(url=url, cookie=cookie)
+        profile_data = self.extract_profile_data(json=response_json)
+        return profile_data
+        
+
+
     
     def send_request(self, url:str, cookie:dict, useCookie:bool=True):
         """
@@ -47,11 +90,9 @@ class InstagramAPI:
             Response: The response object.
         """
         cookies = cookie if useCookie else None
-        print(cookies)
-        
+
         response = requests.get(url=url, cookies=cookies)
         response.raise_for_status()  # Raise an exception if the request was unsuccessful
-        
         return response
 
     def get_json(self, url:str, cookie:dict=None):
@@ -69,14 +110,13 @@ class InstagramAPI:
             InvalidJSONException: If the response cannot be parsed as JSON.
         """
         response = self.send_request(url=url, cookie=cookie)
-
         try:
             response_JSON = response.json()
             return response_JSON
-        except ValueError:
-            print("Invalid JSON response received.", ValueError)
+        except ValueError as e:
+            raise ValueError("Invalid JSON response received.") from e
 
-    def get_json_data(self, json:dict):
+    def extract_profile_data(self, json:dict):
         """
         Extract relevant information from a JSON object and return a dictionary containing the profile information.
 
