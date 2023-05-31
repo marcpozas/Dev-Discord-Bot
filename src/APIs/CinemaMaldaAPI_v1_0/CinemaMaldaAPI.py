@@ -4,7 +4,36 @@ import lxml
 
 class CinemaMaldaAPI:
     """
-    API class for fetching movie data from Cinema Malda website.
+    CinemaMaldaAPI
+    ~~~
+
+    This class provides an API for fetching movie data from the Cinema Malda website.
+
+    ### Args:
+        url (str, optional): The base URL for the Cataas API. Defaults to "https://www.cinemamalda.com/".
+
+    ### Attributes:
+        movie_data (list): A list containing the movie data retrieved from the website.
+
+    ### Methods:
+        - __init__(self, url: str = "https://www.cinemamalda.com/") -> None:
+            Initializes a CinemaMaldaAPI object.
+        
+        - send_request(self, url: str) -> requests.Response:
+            Sends a GET request to the specified URL and returns the response.
+        
+        - get_soup(self, response: requests.Response) -> BeautifulSoup:
+            Creates a BeautifulSoup object from the response content.
+        
+        - get_movies(self, soup: BeautifulSoup) -> list:
+            Extracts movie data from the BeautifulSoup object.
+
+    ### Usage Example:
+        # Create a CinemaMaldaAPI object
+        `api = CinemaMaldaAPI()`
+
+        # Access the movie data
+        `movie_data = api.movie_data`
     """
     def __init__(self, url:str="https://www.cinemamalda.com/") -> None:
         """
@@ -19,9 +48,8 @@ class CinemaMaldaAPI:
         response = self.send_request(url=url)
         soup = self.get_soup(response=response)
         self.movie_data = self.get_movies(soup=soup)
-        [print("Movie:", movie, end="\n\n") for movie in self.movie_data]
 
-    def send_request(self, url:str):
+    def send_request(self, url:str) ->requests.Response:
         """
         Send a GET request to the specified URL and return the response.
 
@@ -38,7 +66,7 @@ class CinemaMaldaAPI:
         response.raise_for_status()  # Raise an exception if the request was unsuccessful
         return response
     
-    def get_soup(self, response):
+    def get_soup(self, response) -> BeautifulSoup:
         """
         Create a BeautifulSoup object from the response content.
 
@@ -55,9 +83,9 @@ class CinemaMaldaAPI:
             soup = BeautifulSoup(response.content, 'lxml')
             return soup
         except Exception as e:
-            print("An error occurred while creating the BeautifulSoup object:", e)
+            raise Exception("An error occurred while creating the BeautifulSoup object:", e)
     
-    def get_movies(self, soup):
+    def get_movies(self, soup) -> dict:
         """
         Extract movie data from the soup object.
 
@@ -96,8 +124,6 @@ class CinemaMaldaAPI:
                     movies_data.append(movie_data)
 
         except AttributeError as e:
-            print(f"An error occurred while extracting movie data: {e}")
+            raise AttributeError(f"An error occurred while extracting movie data: {e}")
         
         return movies_data
-
-#api = CinemaMaldaAPI()
