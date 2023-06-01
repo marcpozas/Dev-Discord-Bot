@@ -7,6 +7,7 @@ from Commands.CinemaMaldaCommand import cinemamalda_info_with_images, cinemamald
 from Commands.InstagramCommand import stalk_instagram_profile, instagram_help_command
 from Commands.NotifyCommand import notify_help_command, notify_something
 from Commands.catCommand import generate_cat
+from Commands.AnimeflvCommand import testCommand
 from Commands.GeneralCommands import GeneralCommands
 
 from Utils import Utils
@@ -79,6 +80,14 @@ async def notify(ctx, *args):
         await notify_help_command(ctx=ctx)
     else:
         await notify_something(ctx=ctx, message=message)
+
+
+@MIAU_BOT.command(name='test', description='El usuario envía una propuesta o bug.')
+async def test(ctx, *args):
+    await testCommand(ctx=ctx)
+
+
+
 
 # Events
 @MIAU_BOT.event
