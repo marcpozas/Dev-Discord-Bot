@@ -3,12 +3,14 @@ from discord.ext import commands
 import os
 import re
 
-from Commands.CinemaMaldaCommand import cinemamalda_info_with_images, cinemamalda_info_no_images, help_command
-from Commands.InstagramCommand import stalk_instagram_profile, instagram_help_command
-from Commands.NotifyCommand import notify_help_command, notify_something
-from Commands.catCommand import generate_cat
-from Commands.AnimeflvCommand import testCommand
-from Commands.GeneralCommands import GeneralCommands
+from Commands import (
+    cinemamalda_info_with_images, cinemamalda_info_no_images, help_command,
+    stalk_instagram_profile, instagram_help_command,
+    notify_help_command, notify_something,
+    generate_cat,
+    testCommand,
+    GeneralCommands
+)
 
 from Utils import Utils
 from CustomHelpCommand import CustomHelpCommand

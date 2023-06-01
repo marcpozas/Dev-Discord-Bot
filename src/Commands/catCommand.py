@@ -1,6 +1,7 @@
 import discord
 
-from APIs.CataasAPI_v1_0.CataasAPI import CataasAPI
+# from APIs.CataasAPI_v1_0.CataasAPI import CataasAPI
+from APIs import CataasAPI
 
 async def generate_cat(ctx, args):
     argument = ' '.join(args) if args else ' '

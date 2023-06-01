@@ -125,35 +125,27 @@ class CataasAPI:
         Returns:
             str: The constructed URL for retrieving the cat image.
         """
-        tag = tag
-        gif = gif
-        text = text
-        type_cat = type_cat
-        filter_cat = filter_cat
-        width = width
-        height = height
-
         final_url = f'{url}/cat'
 
         if tag:
             final_url += f'/{tag}'
         if gif:
-            final_url += f'/{gif}'
+            final_url += f'/gif'
         if text:
             final_url += f'/says/{text}'
-        
+
         if type_cat or filter_cat or width or height:
-            final_url += f'?'
+            final_url += '?'
         if type_cat:
             final_url += f'type={type_cat}&'
         if filter_cat:
-            final_url += f'fi={filter_cat}&'
+            final_url += f'filter={filter_cat}&'
         if width:
             final_url += f'width={width}&'
         if height:
             final_url += f'height={height}&'
-        
-        return final_url.strip('&').strip('/')
+
+        return final_url.rstrip('&').rstrip('/')
     
     def get_tags(self) -> list:
         """

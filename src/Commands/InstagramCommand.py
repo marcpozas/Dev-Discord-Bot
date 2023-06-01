@@ -1,7 +1,8 @@
 import discord
 import time
 
-from APIs.InstagramAPI_v1_0.InstagramAPI import InstagramAPI
+# from APIs.InstagramAPI_v1_0.InstagramAPI import InstagramAPI
+from APIs import InstagramAPI
 
 async def stalk_instagram_profile(ctx, username, max_posts:int=3):
     print(max_posts)

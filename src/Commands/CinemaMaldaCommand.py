@@ -1,7 +1,8 @@
 import discord
 import time
 
-from APIs.CinemaMaldaAPI_v1_0.CinemaMaldaAPI import CinemaMaldaAPI
+# from APIs.CinemaMaldaAPI_v1_0.CinemaMaldaAPI import CinemaMaldaAPI
+from APIs import CinemaMaldaAPI
 
 async def cinemamalda_info_with_images(ctx, dates:bool, movie_limit:int=3):
     """
